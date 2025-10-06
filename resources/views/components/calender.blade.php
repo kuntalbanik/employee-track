@@ -28,7 +28,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="">
+                <div class="row">
                     <div data-bs-toggle="calendar" id="calendar_inline" class="col shadow rounded"></div>
                 </div>
             </div>

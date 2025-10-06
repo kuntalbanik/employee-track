@@ -15,31 +15,10 @@ class UserController extends Controller
     //
 
     // Add user function
-    // Called from user-form.blade.php file
     function addUser(Request $request)
     {
 
-        // store data in session
-        $request->session()->put('name', $request->input('name'));
-
-        // check session data
-        // echo session('username');
-
-
-        // store date to flash message
-        $request->session()->flash('message', "User has been added successfully");
-
-
-
-        // 1. Validation (ensure you validate all fields first)
-        // $request->validate([
-        //     'name' => 'required',
-        //     'email' => 'required',
-        //     'password' => 'required', // 'confirmed' checks for a password_confirmation field
-        // ]);
-
-
-        // 2. Create the User record
+        // Create the User record
         $user = new User();
 
         $user->name = $request->name;

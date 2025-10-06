@@ -30,10 +30,14 @@
 
                 <small>Task Start : {{ $task->created_at }} <br> Task End : {{ $task->end_at }}</small>
                 <br>
-                <small>Status : {{ $task->status }}</small>
+                @if($task->status !== "Closed")
+                    <small class="text-danger"><b>Status : {{ $task->status }}</b></small>
+                @else
+                    <small><b>Status : {{ $task->status }}</b></small>
+                @endif
             </a>
             @endforeach
-            
+
         </div>
 
     </div>

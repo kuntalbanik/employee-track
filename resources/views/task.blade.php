@@ -45,13 +45,14 @@
                 <div class="mb-3">
                 @if($task->status !== "Closed")
                     <select class="form-select" aria-label="Default select example" name="status" id="status" onclick="getLocation()" required>
-                        <option selected>-</option>
                         <option value="Open">Open</option>
                         <option value="Closed">Closed</option>
                     </select>
                     </div>
                     <input type="text" id="loc" name="loc" hidden>
                     <button type="submit" class="btn btn-primary rounded-5 btn-lg w-100">Update Task</button>
+                @else
+                    <small><b>Status : {{ $task->status }}</b></small>
                 @endif
             </form>
 

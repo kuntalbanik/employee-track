@@ -1,6 +1,6 @@
 @section('header')
 
-<div class="d-flex">
+<div class="d-flex z-3 position-absolute">
     <nav class="sidebar d-flex flex-column flex-shrink-0 position-fixed collapsed">
         <button class="toggle-btn" onclick="toggleSidebar()">
             <i class="fas fa-chevron-left"></i>

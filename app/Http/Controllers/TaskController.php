@@ -14,7 +14,29 @@ class TaskController extends Controller
     public $timestamps = false;
 
     
+    // dashboard function
+    function dashboard(){
 
+
+        if (Auth::check()) {
+            // Get the authenticated owner name
+            $owner = Auth::user()->email;
+            // $latestTasks = $user->tasks()->latest()->take(5)->get();
+            // $latestTasks = Task::orderBy('id', 'desc')->take(5)->get();
+            // Query the posts table using the Post model
+            
+            $latestTasks = Task::where('owner', $owner) // Filter by logged-in user
+                         ->where('status', 'Open')   // Add condition for 'open' status
+                         ->latest()                  // Order results by `created_at` DESC
+                         ->take(5)                   // Take the first 5 results
+                         ->get();   
+            
+        } else {
+            $latestTasks = collect();
+        }
+        // echo $latestTasks;
+        return view('dashboard', ['tasks' => $latestTasks]);
+    }
 
     // Add Tasks & save data in DB
     function addTasks(Request $request)
@@ -60,20 +82,10 @@ class TaskController extends Controller
     {
 
         // Return function output from   Model
-        $data = new Task;
-
+        // $data = new Task;
         $owner = Auth::user()->email;
-        // echo $data->testEx();
-
-        // -------------------------------------------------
-        // get all data from students table using    Model
-
-        // $students = Task::all();
-        // $students = Student::get();
-        // $students = Student::find(1);
         $task_data = Task::where('owner', $owner)->get();
-        // $students = Student::where('batch_year', '2018')->first();
-        // $students = Student::where('name', 'John')->get();
+ 
 
         return view('task-list', ['tasks' => $task_data]);
     }
@@ -108,11 +120,15 @@ class TaskController extends Controller
 
         // Save current login timestamp
         // $owner = Auth::user()->email;
-        $out1 = Task::where('id', $request->id)->update(['status' => $request->status, 'end_lng_lat' => $currentLocation, 'end_addr' => $address, 'end_at' => $currentTime]);
-
-        if ($out1) {
-            return redirect('tasks');
+        if($request->status == "Closed"){
+            $out1 = Task::where('id', $request->id)->update(['status' => $request->status, 'end_lng_lat' => $currentLocation, 'end_addr' => $address, 'end_at' => $currentTime]);
+            if($out1) {
+                return redirect('tasks');
+            }
         }
+        else
+            return redirect('tasks');
+
         // echo $request->id;
     }
 }

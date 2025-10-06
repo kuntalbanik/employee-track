@@ -177,6 +177,7 @@ main {
     /* text-align: center; */
     padding: 1rem !important;
     margin: 4px 8px;
+    width: 70px;
 }
 
 .collapsed .sidebar-link i {

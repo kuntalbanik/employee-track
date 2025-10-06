@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
     });
     
     Route::view('dashboard/', 'dashboard');
+    Route::get('dashboard/', [TaskController::class, 'dashboard']);
     Route::view('tasks/', 'task-list');
     Route::get('tasks/', [TaskController::class, 'getTasks']);
     Route::view('create-task/', 'create-task');

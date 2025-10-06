@@ -7,9 +7,17 @@
 
 
 <div class="main-content">
-    <h1>Welcome to Dashboard</h1>
+    <h1>Dashboard</h1>
+    <a href="/create-task" class="z-0 position-absolute top-10  btn btn-info">Add Quick task</a>
+    
+    @foreach($tasks as $task)
+        <h4>{{ $task->task_name }}</h4>
 
-    <x-calender />
+
+     @endforeach
+    <div>
+        <x-calender />
+    </div>
 
 </div>
 
