@@ -41,7 +41,14 @@
                 <div class="col-10 mb-1 small">
                     End Position : {{ $task->end_lng_lat }}
                 </div>
-                <small>Task Start : {{ $task->created_at }}<br> Task End : {{ $task->end_at }}</small>
+
+                @if($task->created_at && $task->start_at)
+                    <small>Start : {{ $task->start_at }}<br> End : {{ $task->created_at }}</small>
+                @elseif($task->created_at)
+                    <small>Start : {{ $task->created_at }}<br></small>
+                @endif
+
+                
                 <div class="mb-3">
                 @if($task->status !== "Closed")
                     <select class="form-select" aria-label="Default select example" name="status" id="status" onclick="getLocation()" required>

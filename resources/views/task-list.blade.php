@@ -27,8 +27,12 @@
                     Ref. : {{ $task->ref_info }}
 
                 </div>
-
-                <small>Task Start : {{ $task->created_at }} <br> Task End : {{ $task->end_at }}</small>
+                @if($task->created_at && $task->start_at)
+                    <small>Start : {{ $task->start_at }}<br> End : {{ $task->created_at }}</small>
+                @elseif($task->created_at)
+                    <small>Start : {{ $task->created_at }}<br></small>
+                @endif
+                
                 <br>
                 @if($task->status !== "Closed")
                     <small class="text-danger"><b>Status : {{ $task->status }}</b></small>

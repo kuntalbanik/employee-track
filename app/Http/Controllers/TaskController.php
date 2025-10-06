@@ -38,6 +38,10 @@ class TaskController extends Controller
         return view('dashboard', ['tasks' => $latestTasks]);
     }
 
+
+
+
+
     // Add Tasks & save data in DB
     function addTasks(Request $request)
     {
@@ -61,7 +65,7 @@ class TaskController extends Controller
             'task_name' => $request->task_name,
             'visit_purpose' => $request->visit_purpose,
             'ref_info' => $request->ref_info,
-            'created_at' => $currentTime,
+            // 'created_at' => $currentTime,
             'start_lng_lat' => $currentLocation,
             'start_addr' => $address,
             'status' => "Open",
@@ -94,6 +98,8 @@ class TaskController extends Controller
         return view('task-list', ['tasks' => $task_data]);
     }
 
+
+
     // Get single task details
     function getSingleTask(Request $request)
     {
@@ -104,7 +110,7 @@ class TaskController extends Controller
     }
 
 
-
+    // Update task
     function updateTask(Request $request)
     {
 
@@ -115,17 +121,24 @@ class TaskController extends Controller
         // Get current time stamp
         $currentTime = Carbon::now();
 
-        // Get current time stamp
-        $currentTime = Carbon::now();
-
         $currentLocation = $request->loc;
 
         $address = "Dummy address";
 
+        $createdAt = Task::where('id', $request->id)
+                    ->value('created_at');
+                    // ->get();
+
         // Save current login timestamp
         // $owner = Auth::user()->email;
         if($request->status == "Closed"){
-            $out1 = Task::where('id', $request->id)->update(['status' => $request->status, 'end_lng_lat' => $currentLocation, 'end_addr' => $address, 'end_at' => $currentTime]);
+            $out1 = Task::where('id', $request->id)->update([
+                'status' => $request->status, 
+                'end_lng_lat' => $currentLocation, 
+                'end_addr' => $address, 
+                'start_at' => $createdAt
+            ]);
+
             if($out1) {
                 return redirect('tasks');
             }
@@ -138,38 +151,29 @@ class TaskController extends Controller
 
 
 
-    public function showDuration()
-    {
-        // Example data from your database (or fetched via a query)
-        $record = Task::first(); // Or use find(), where(), etc.
+    // public function showDuration()
+    // {
+    //     // Example data from your database (or fetched via a query)
+    //     $record = Task::first(); // Or use find(), where(), etc.
 
-        if ($record) {
-            // Eloquent automatically casts 'start' and 'end' to Carbon objects
-            $startTime = $record->start;
-            $endTime = $record->end;
+    //     if ($record) {
+    //         // Eloquent automatically casts 'start' and 'end' to Carbon objects
+    //         $startTime = $record->start;
+    //         $endTime = $record->end;
 
-            // Calculate the difference in minutes
-            $totalMinutes = $startTime->diffInMinutes($endTime);
+    //         // Calculate the difference in minutes
+    //         $totalMinutes = $startTime->diffInMinutes($endTime);
 
-            // Convert total minutes into hours and remaining minutes
-            $hours = floor($totalMinutes / 60);
-            $minutes = $totalMinutes % 60;
+    //         // Convert total minutes into hours and remaining minutes
+    //         $hours = floor($totalMinutes / 60);
+    //         $minutes = $totalMinutes % 60;
 
-            $duration = sprintf('%d hours and %d minutes', $hours, $minutes);
-        } else {
-            $duration = 'No record found.';
-        }
+    //         $duration = sprintf('%d hours and %d minutes', $hours, $minutes);
+    //     } else {
+    //         $duration = 'No record found.';
+    //     }
 
-        return view('your.view', compact('duration'));
-    }
-
-
-
-
-
-
-
-
-
+    //     return view('your.view', compact('duration'));
+    // }
 
 }
