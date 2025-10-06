@@ -28,7 +28,7 @@ class TaskController extends Controller
             $latestTasks = Task::where('owner', $owner) // Filter by logged-in user
                          ->where('status', 'Open')   // Add condition for 'open' status
                          ->latest()                  // Order results by `created_at` DESC
-                         ->take(3)                   // Take the first 5 results
+                         ->take(2)                   // Take the first 5 results
                          ->get();   
             
         } else {
@@ -77,20 +77,24 @@ class TaskController extends Controller
         }
     }
 
-
+    // Get all tasks from database
     function getTasks()
     {
 
         // Return function output from   Model
         // $data = new Task;
         $owner = Auth::user()->email;
-        $task_data = Task::where('owner', $owner)->get();
+        $task_data = Task::where('owner', $owner)
+                    // ->orderBy('created_at', 'desc')
+                    ->orderByRaw("CASE WHEN status = 'open' THEN 1 ELSE 2 END")
+                    ->latest()
+                    ->get();
  
 
         return view('task-list', ['tasks' => $task_data]);
     }
 
-
+    // Get single task details
     function getSingleTask(Request $request)
     {
 
@@ -131,4 +135,41 @@ class TaskController extends Controller
 
         // echo $request->id;
     }
+
+
+
+    public function showDuration()
+    {
+        // Example data from your database (or fetched via a query)
+        $record = Task::first(); // Or use find(), where(), etc.
+
+        if ($record) {
+            // Eloquent automatically casts 'start' and 'end' to Carbon objects
+            $startTime = $record->start;
+            $endTime = $record->end;
+
+            // Calculate the difference in minutes
+            $totalMinutes = $startTime->diffInMinutes($endTime);
+
+            // Convert total minutes into hours and remaining minutes
+            $hours = floor($totalMinutes / 60);
+            $minutes = $totalMinutes % 60;
+
+            $duration = sprintf('%d hours and %d minutes', $hours, $minutes);
+        } else {
+            $duration = 'No record found.';
+        }
+
+        return view('your.view', compact('duration'));
+    }
+
+
+
+
+
+
+
+
+
+
 }

@@ -9,10 +9,8 @@
 <div class="main-content">
     <h1>Dashboard</h1>
      
-    <a href="/tasks" class="text-decoration-none">
-    <p class="fw-medium"> <i class="fas fa-tasks me-3"></i>Your Pending Tasks <span>
-            <i class="fa fa-info-circle" aria-hidden="true"></i>
-        </span></p></a>
+    <p></p>
+    <p class="fw-medium"> <i class="fas fa-tasks me-3"></i>Your Pending Tasks</p>
     <hr class="dashboard-hr">
     <div class="list-group list-group-flush border-bottom scrollarea">
             @foreach($tasks as $task)
@@ -30,6 +28,8 @@
                 @endif
             </a>
             @endforeach
+
+            <a href="/tasks" class="text-decoration-none"><p>And more ...</p></a>
 
         </div>
 
