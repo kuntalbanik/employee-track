@@ -28,7 +28,7 @@ class TaskController extends Controller
             $latestTasks = Task::where('owner', $owner) // Filter by logged-in user
                          ->where('status', 'Open')   // Add condition for 'open' status
                          ->latest()                  // Order results by `created_at` DESC
-                         ->take(5)                   // Take the first 5 results
+                         ->take(3)                   // Take the first 5 results
                          ->get();   
             
         } else {
