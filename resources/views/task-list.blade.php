@@ -21,12 +21,13 @@
                 <div class="col-10 mb-1 small">
                     <small>Created by : {{ $task->owner }}</small>
                 </div>
-                <div class="col-10 mb-1 small">
-                    Start Position : {{ $task->start_addr }}
+                <div class="d-flex w-100 justify-content-between">
+                    Visit for : {{ $task->visit_purpose }}
+                    <br>
+                    Ref. : {{ $task->ref_info }}
+
                 </div>
-                <div class="col-10 mb-1 small">
-                    End Position : {{ $task->end_addr }}
-                </div>
+
                 <small>Task Start : {{ $task->created_at }} <br> Task End : {{ $task->end_at }}</small>
                 <br>
                 <small>Status : {{ $task->status }}</small>

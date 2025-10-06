@@ -37,9 +37,12 @@ class TaskController extends Controller
         $outputResult = Task::insert([
             'owner' => $owner,
             'task_name' => $request->task_name,
+            'visit_purpose' => $request->visit_purpose,
+            'ref_info' => $request->ref_info,
             'created_at' => $currentTime,
             'start_lng_lat' => $currentLocation,
             'start_addr' => $address,
+            'status' => "Open",
         ]);
 
         if ($outputResult) {

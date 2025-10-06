@@ -24,6 +24,11 @@
                 <div class="col-10 mb-1 small">
                     Owner : {{ $task->owner }}
                 </div>
+                <div class="d-flex w-100 justify-content-between">
+                    Visit for : {{ $task->visit_purpose }}
+                    <br>
+                    Ref. : {{ $task->ref_info }}
+                </div>
                 <div class="col-10 mb-1 small">
                     Start Address : {{ $task->start_addr }}
                 </div>
@@ -38,12 +43,11 @@
                 </div>
                 <small>Task Start : {{ $task->created_at }}<br> Task End : {{ $task->end_at }}</small>
                 <div class="mb-3">
-                @if($task->status !== "closed")
+                @if($task->status !== "Closed")
                     <select class="form-select" aria-label="Default select example" name="status" id="status" onclick="getLocation()" required>
                         <option selected>-</option>
-                        <option value="open">Open</option>
-                        <option value="pending">Pending</option>
-                        <option value="closed">Closed</option>
+                        <option value="Open">Open</option>
+                        <option value="Closed">Closed</option>
                     </select>
                     </div>
                     <input type="text" id="loc" name="loc" hidden>
